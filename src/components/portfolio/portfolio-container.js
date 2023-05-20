@@ -3,38 +3,45 @@ import React, { Component } from "react";
 import PortfolioItem from "./portfolio-item";
 
 export default class PortfolioContainer extends Component {
-    constructor() {
-      super();
+  constructor() {
+    super();
 
+    this.state = {
+      pageTitle: "Welcome to my portfolio",
+      data: [
+        { title: "Quip" },
+        { title: "Eventbrite" },
+        { title: "Ministry Safe" },
+        { title: "SwingAway" }
+      ]
+    };
 
-      this.state = {
-        pageTitle: "Welcome to My Portfolio",
-        data: [
-            {title: "Quip" }, 
-            {title:"Eventbrite" }, 
-            {title:"Ministry Safe" }, 
-            {title:"Swingaway" }
-        ]
-      };
+    this.handlePageTitleUpdate = this.handlePageTitleUpdate.bind(this);
+  }
 
-    }
+  portfolioItems() {
+    return this.state.data.map(item => {
+      return <PortfolioItem title={item.title} url={"google.com"} />;
+    });
+  }
 
-    portfolioItems() {
+  handlePageTitleUpdate() {
+    this.setState({
+      pageTitle: "Something Else"
+    });
+  }
 
-        return this.state.data.map(item => {
-            return <PortfolioItem title={item.title} url={"google.com"} />;
-        })
-    }
+  render() {
+    return (
+      <div>
+        <h2>{this.state.pageTitle}</h2>
 
+        {this.portfolioItems()}
 
-    render() {
-        return (
-            <div>
-                <h2>{this.state.pageTitle}</h2>
+        <hr />
 
-                {this.portfolioItems()}
-
-            </div>
-        )
-    }
+        <button onClick={this.handlePageTitleUpdate}>Change Title</button>
+      </div>
+    );
+  }
 }
