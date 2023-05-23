@@ -17,6 +17,11 @@ export default class App extends Component {
 
         <Router>
           <div>
+          <h1>Raji Johnson React Portfolio</h1>
+        <div>
+          {moment().format('MMMM Do YYYY, h:mm:ss a')}
+        </div>
+        <h2>Welcome To My Portfolio</h2>
 
             <NavigationContainer />
 
@@ -32,13 +37,6 @@ export default class App extends Component {
           </div>
         </Router>
 
-
-        <h1>Raji Johnson React Portfolio</h1>
-        <div>
-          {moment().format('MMMM Do YYYY, h:mm:ss a')}
-        </div>
-        <h2>Welcome To My Portfolio</h2>
-        <PortfolioContainer />
       </div>
     );
   }
