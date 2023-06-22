@@ -32,9 +32,10 @@ export default class Auth extends Component {
                 />
 
                 <div className="right-column">
-                    <Login />
+                    <Login 
                     handleSuccessfulAuth={this.handleSuccessfulAuth}
-                    handleUnsuccessfulAuth={this.handleUnsuccessfulAuth}
+                    handleUnsuccessfulAuth={this.handleUnsuccessfulAuth} 
+                    />
                 </div>
 
             </div>
