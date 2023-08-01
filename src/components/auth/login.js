@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default class Login extends Component {
   constructor(props) {
@@ -8,8 +9,8 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      error: ""
-    }
+      errorText: ""
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,76 +20,76 @@ export default class Login extends Component {
     this.setState({
       [event.target.name]: event.target.value,
       errorText: ""
-    })
+    });
   }
 
   handleSubmit(event) {
-    axios.post("https://api.devcamp.space/sessions", 
-    {
-      client: {
-        email: this.state.email,
-        password: this.state.password
-      }
-    },
-    { withCredentials: true }
-    
-    ).then(response => {
-      if (response.data.status === 'created') {
-        console.log("You Can Come In...")
-        this.props.handleSuccessfulAuth();
-      } else {
+    axios
+      .post(
+        "https://api.devcamp.space/sessions",
+        {
+          client: {
+            email: this.state.email,
+            password: this.state.password
+          }
+        },
+        { withCredentials: true }
+      )
+      .then(response => {
+        if (response.data.status === "created") {
+          this.props.handleSuccessfulAuth();
+        } else {
+          this.setState({
+            errorText: "Wrong email or password"
+          });
+          this.props.handleUnsuccessfulAuth();
+        }
+      })
+      .catch(error => {
         this.setState({
-          errorText: "Wrong Email or Password"
+          errorText: "An error occurred"
         });
         this.props.handleUnsuccessfulAuth();
-
-      }
-    })
-
-    .catch(error => {
-      this.setState({
-        errorText: "An error occurred"
       });
-      this.props.handleUnsuccessfulAuth();
-
-
-    });
 
     event.preventDefault();
   }
-    render() {
-        return (
-            <div>
 
-              <h1>LOGIN TO ACCESS YOUR DASHBOARD</h1>
+  render() {
+    return (
+      <div>
+        <h1>LOGIN TO ACCESS YOUR DASHBOARD</h1>
 
-              <div>{this.state.errorText}</div>
+        <div>{this.state.errorText}</div>
 
-              <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className="auth-form-wrapper">
+          <div className="form-group">
+            <FontAwesomeIcon icon="envelope" shake />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </div>
 
-                <input 
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={this.state.email}
-                onChange={this.handleChange}
-                />
+          <div className="form-group">
+            <FontAwesomeIcon icon="lock" flip />
+            <input
+              type="password"
+              name="password"
+              placeholder="Your password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+          </div>
 
-                <input 
-                 type="password"
-                 name="password"
-                 placeholder="Your Password"
-                 value={this.state.password}
-                 onChange={this.handleChange}
-                />
-
-                <div>
-                  <button type="submit">Login</button>
-                </div>
-                
-              </form>
-
-            </div>
-        );
-    }
+          <button className="btn" type="submit">
+            Login
+          </button>
+        </form>
+      </div>
+    );
+  }
 }
